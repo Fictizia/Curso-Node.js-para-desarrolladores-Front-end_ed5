@@ -237,6 +237,52 @@
 
 ![dependency-hell](https://cdn-images-1.medium.com/max/1600/1*lODz2PMpz99wQIRSN0hhEg.png)
 
+*Ejemplo de las dependencias de [ember-cli-workbox](https://github.com/BBVAEngineering/ember-cli-workbox)*
+
+```json
+{
+ "dependencies": {
+    "bower": "^1.8.2",
+    "broccoli-funnel": "^1.2.0",
+    "broccoli-merge-trees": "^1.2.0",
+    "broccoli-plugin": "^1.3.0",
+    "ember-cli-babel": "^6.3.0",
+    "pretty-bytes": "^4.0.2",
+    "rimraf": "^2.6.2",
+    "workbox-build": "3.0.0-alpha.3"
+  },
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.4.5",
+    "debug": "^3.1.0",
+    "ember-ajax": "^3.0.0",
+    "ember-cli": "~2.14.2",
+    "ember-cli-dependency-checker": "^1.3.0",
+    "ember-cli-eslint": "^3.0.0",
+    "ember-cli-htmlbars": "^2.0.1",
+    "ember-cli-htmlbars-inline-precompile": "^0.4.3",
+    "ember-cli-inject-live-reload": "^1.4.1",
+    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-shims": "^1.1.0",
+    "ember-cli-sri": "^2.1.0",
+    "ember-cli-uglify": "^2.0.0",
+    "ember-disable-prototype-extensions": "^1.1.2",
+    "ember-engines": "^0.5.14",
+    "ember-export-application-global": "^2.0.0",
+    "ember-load-initializers": "^1.0.0",
+    "ember-resolver": "^4.0.0",
+    "ember-sinon": "^1.0.1",
+    "ember-source": "~2.14.1",
+    "eslint": "^4.10.0",
+    "eslint-config-bbva": "^2.0.0",
+    "loader.js": "^4.2.3",
+    "mocha": "^4.0.1",
+    "broccoli-test-helpers": "0.0.9",
+    "chai": "^3.5.0",
+    "rimraf": "^2.5.3"
+  }
+}
+```
+
 - [How one developer just broke Node, Babel and thousands of projects in 11 lines of JavaScript](http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/)
 - [A discussion about the breaking of the Internet](https://medium.com/@mproberts/a-discussion-about-the-breaking-of-the-internet-3d4d2a83aa4d#.r9oqkkuhb)
 - [I’ve Just Liberated My Modules](https://medium.com/@azerbike/i-ve-just-liberated-my-modules-9045c06be67c#.mjp6u93c1)
@@ -285,6 +331,7 @@
 
 [Tutorial interactivo](https://try.github.io/levels/1/challenges/1)
 
+
 **Trabajo efectivo**
 
 - [Clientes escritorio](https://mac.github.com)
@@ -300,6 +347,22 @@
 - Pull-request
 - Gestión de merges
 - Público/Privado
+
+
+**[Git Flow](http://aprendegit.com/que-es-git-flow/)**
+
+El trabajo se organiza en dos ramas principales:
+
+- **Rama master**: cualquier commit que pongamos en esta rama debe estar preparado para subir a producción
+- **Rama develop**: rama en la que está el código que conformará la siguiente versión planificada del proyecto
+Cada vez que se incorpora código a master, tenemos una nueva versión.
+
+Además de estas dos ramas, Se proponen las siguientes ramas auxiliares:
+
+- **Feature**: Nuevas funcionalidades que se originan y terminan en la **rama develop**
+- **Release**: Ramas listas para pasar a producción que se originan de **develop** y se incorporan en **master** y **develop**
+- **Hotfix**: Parches que se aplica sobre **master** y **develop** y que se originan de **master**
+
 
 **Instalación**
 
@@ -330,16 +393,16 @@ Configuración (entornos):
 ![Repositorios locales y remotos](http://media.tumblr.com/tumblr_lbnpoxYtNm1qaku05.png)
 
 - System (todos los usuarios)
-    - git config --system
-    - etc/gitconfig, /usr/local/git/etc/gitconfig
+    - `git config --system`
+    - `etc/gitconfig`, `/usr/local/git/etc/gitconfig`
 
 - Global (mi usuario)
-    - git config --global
-    - .gitconfig (usuario/root)
+    - `git config --global`
+    - `.gitconfig` (usuario/root)
 
 - Project (proyecto)
-    - git config
-    - /proyect/.git/config
+    - `git config`
+    - `/proyect/.git/config`
 
 
 **Comandos básicos**
@@ -756,7 +819,7 @@ GitHub Pages nos permite hacer una web estática para nuestro usuario o proyecto
   - clone
     - Clonamos el repositorio
     ```
-    git rclone <-- URL.git -->
+    git clone <-- URL.git -->
     ```
 
   - checkout --orphan
@@ -852,6 +915,34 @@ GitHub Pages nos permite hacer una web estática para nuestro usuario o proyecto
 - [Wikis](https://guides.github.com/features/wikis)
 
 
+### [Cloud9](https://aws.amazon.com/cloud9/)
+
+![c9_logo](https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/8389/vz1XuNqHTyfO4YsqI3f2)
+
+**Características estrella**
+- Code together in real time
+- Share your IDE, your workspace, a preview, or your running app
+- Replay all edits and see your code at any point in time
+- AWS integration
+
+**Otras características**
+- Preview in any browser
+- Built-In Terminal
+- Language Tools
+- Debugger
+- Split View
+- Themes
+- Run Panel
+- Key Bindings Editor
+- VIM/Emacs/Sublime Mode
+- Built-In Image Editor
+
+**Más**
+- [Precios y planes](https://aws.amazon.com/cloud9/pricing/)
+- [Getting started](https://aws.amazon.com/cloud9/getting-started/)
+- [c9 en GitHub](https://github.com/c9)
+
+
 ### Trabajando con C9.io
 
 - [Setup Git and basic commands](http://git-scm.com/book/es/v1/Empezando-Configurando-Git-por-primera-vez)
@@ -902,34 +993,6 @@ Recuerda que debes incluir este comando antes de tu próximo *git push*
 ### Resumen
 ![Trabajar con Git/Github](http://www.geekgumbo.com/wp-content/uploads/2011/08/nvie-git-workflow-commands.png)
 [tamaño original](http://www.geekgumbo.com/wp-content/uploads/2011/08/nvie-git-workflow-commands.png)
-
-
-### C9.io
-
-![c9_logo](https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/8389/vz1XuNqHTyfO4YsqI3f2)
-
-**Características estrella**
-- Code together in real time
-- Share your IDE, your workspace, a preview, or your running app
-- Replay all edits and see your code at any point in time
-- AWS integration
-
-**Otras características**
-- Preview in any browser
-- Built-In Terminal
-- Language Tools
-- Debugger
-- Split View
-- Themes
-- Run Panel
-- Key Bindings Editor
-- VIM/Emacs/Sublime Mode
-- Built-In Image Editor
-
-**Más**
-- [Precios y planes](https://aws.amazon.com/cloud9/pricing/)
-- [Getting started](https://aws.amazon.com/cloud9/getting-started/)
-- [c9 en GitHub](https://github.com/c9)
 
 
 ## Reintroducción a Javascript
@@ -3053,11 +3116,11 @@ mostrar_propiedades(objeto1, "objeto1");
 
 - **Retorno**
 
-```javascript
-function sumaCuadrados (a, b) {
-  return (a*a) + (b*b);
-};
-```
+  ```javascript
+  function sumaCuadrados (a, b) {
+    return (a*a) + (b*b);
+  };
+  ```
 
 ### Scope
 
@@ -3522,9 +3585,9 @@ Promise.all([p1, p2, p3, p4]).then(function(value) {
 > Un espacio de nombres es un contenedor abstracto en el que un grupo de uno o más identificadores únicos pueden existir. Un identificador definido en un espacio de nombres está asociado con ese espacio de nombres. El mismo identificador puede independientemente ser definido en múltiples espacios de nombres, eso es, el sentido asociado con un identificador definido en un espacio de nombres es independiente del mismo identificador declarado en otro espacio de nombres. Los lenguajes que manejan espacio de nombres especifican las reglas que determinan a qué espacio de nombres pertenece una instancia de un identificador. *[Wikipedia](http://www.wikiwand.com/es/Espacio_de_nombres)*
 
 - **Claves**
-    - Reducir el número de objetos globales
-    - Todo forma parte de un único objeto
-    - Se puede trabajar en diversos archivos .js
+  - Reducir el número de objetos globales
+  - Todo forma parte de un único objeto
+  - Se puede trabajar en diversos archivos .js
 
 - **Namespace (función anónima):**
 
@@ -3532,23 +3595,23 @@ Promise.all([p1, p2, p3, p4]).then(function(value) {
   var myApp = (function () {
     // privado
     var metodoPrivado1 = function () {
-    console.info("Método Privado 1");
+      console.info("Método Privado 1");
     };
     var metodoPrivado2 = function () {
-    console.info("Método Privado 2");         
+      console.info("Método Privado 2");         
     };
     var propiedadPrivada1 = 'dato1';
     return {
-    // público
-    metodoPublico1: metodoPrivado1,
-    propiedadesPublicas:{
-      propiedad1: propiedadPrivada1,
-      otro: "otro"
-    },
-    mas:{
-      MetodoPublico2: metodoPrivado2
-    }
-    //...
+      // público
+      metodoPublico1: metodoPrivado1,
+      propiedadesPublicas:{
+        propiedad1: propiedadPrivada1,
+        otro: "otro"
+      },
+      mas:{
+        MetodoPublico2: metodoPrivado2
+      }
+      //...
     }
   })();
   ```
@@ -3561,7 +3624,7 @@ Promise.all([p1, p2, p3, p4]).then(function(value) {
   (function( namespace ){
     namespace.propiedad1 = "Propiedad 1";
     namespace.metodo1 = function(){
-    return "metodo1";
+      return "metodo1";
     };
   })(myApp);
   
@@ -3579,7 +3642,7 @@ Promise.all([p1, p2, p3, p4]).then(function(value) {
   
   myApp.ejemploDatos = {
     metodo: function () {
-    console.log("esto es un metodo");         
+      console.log("esto es un metodo");         
     },
     propiedad1: 1,
     propiedad2: "dos"
@@ -3595,16 +3658,36 @@ Promise.all([p1, p2, p3, p4]).then(function(value) {
     var partes = nombre.split('.');
     var nameSpace = myApp;
     for (var i in partes) {
-    if (!nameSpace[partes[i]]) {
-      nameSpace[partes[i]] = {};
+      if (!nameSpace[partes[i]]) {
+        nameSpace[partes[i]] = {};
+      }
+      nameSpace = nameSpace[partes[i]];
     }
-    nameSpace = nameSpace[partes[i]];
-  }
   }  
 
   myApp.crearElemento('uno.dos.tres.cuatro.cinco.y.mas.niveles');
   myApp.uno.dos.tres.cuatro.cinco.y.mas.niveles = "Funciona!"
   ```
+
+### Prototipo
+
+En lo que a herencia se refiere, JavaScript sólo tiene una estructura: objetos. Cada objeto tiene una propiedad privada (referida como su `[[Prototype]]`) que mantiene un enlace a otro objeto llamado su prototipo. Ese objeto prototipo tiene su propio prototipo, y así sucesivamente hasta que se alcanza un objeto cuyo prototipo es `null`. Por definición, `null` no tiene prototipo, y actúa como el enlace final de esta cadena de prototipos.
+
+```javascript
+function Vehicle(maxSpeed) {
+    this.maxSpeed = maxSpeed;
+}
+
+Vehicle.prototype.maxSpeed = function() {
+    return this.maxSpeed;
+}
+
+function Car(maxSpeed) {
+    Vehicle.call(this, maxSpeed);
+}
+
+Car.prototype = new Vehicle();
+```
 
 ### Otras features útiles
 
