@@ -2219,42 +2219,42 @@ function testCondiccion (condicion){
 **Metodos**
 
 - Creando Fechas:
-    - Fecha Actual:
+  - Fecha Actual:
 
-      ```javascript
-      var ahora = new Date();
-      console.log(ahora);
-      ```
+    ```javascript
+    var ahora = new Date();
+    console.log(ahora);
+    ```
 
-    - Usando milisegundos (desde el 1/1/1970 00:00):
+  - Usando milisegundos (desde el 1/1/1970 00:00):
 
-      ```javascript
-      var diaDespues = new Date(3600*24*1000);
-      console.log(diaDespues);
-      ```
+    ```javascript
+    var diaDespues = new Date(3600*24*1000);
+    console.log(diaDespues);
+    ```
 
-    - Usando cadenas de texto:
+  - Usando cadenas de texto:
 
-      ```javascript
-      var newYear = new Date("January 1, 2016 00:00:00");
-      ```
+    ```javascript
+    var newYear = new Date("January 1, 2016 00:00:00");
+    ```
 
-    - Usando números:
+  - Usando números:
 
-      ```javascript
-        var newYear = new Date(2016, 1, 1); // AAAA, MM, DD
-        var newYear = new Date(2016, 1, 1, 0, 0, 0); // AAAA, MM, DD, HH, MM, SS
-      ```
+    ```javascript
+      var newYear = new Date(2016, 1, 1); // AAAA, MM, DD
+      var newYear = new Date(2016, 1, 1, 0, 0, 0); // AAAA, MM, DD, HH, MM, SS
+    ```
 
-    - Usando UTC:
+  - Usando UTC:
 
-      ```javascript
-        var newYear = new Date(Date.UTC(2016, 1, 1));
-      ```
+    ```javascript
+      var newYear = new Date(Date.UTC(2016, 1, 1));
+    ```
 
 - Getters:
-    - Local
-    
+  - Local
+  
     ```javascript
     var ahora = new Date();
     console.log("La fecha es " + ahora);
@@ -2270,7 +2270,8 @@ function testCondiccion (condicion){
     console.log("Milisegundos desde 1/1/1970: "+ ahora.getTime());
     console.log("milisegundos: " + ahora.getMilliseconds());
     ```
-    - UTC
+
+  - UTC
 
     ```javascript
     var ahora = new Date();
@@ -2311,55 +2312,54 @@ function testCondiccion (condicion){
     ```
 
 - Otros:
-    - .getTimezoneOffset() *Devuelve la diferencia entre tu zona horaria y UTC (en minutos)*
+  - .getTimezoneOffset() *Devuelve la diferencia entre tu zona horaria y UTC (en minutos)*
 
-      ```javascript
-      ahora.getTimezoneOffset();
-      ```
+    ```javascript
+    ahora.getTimezoneOffset();
+    ```
 
-    - .toString(), .toDateString(), .toTimeString() *Devuelve una cadena con la fecha*
+  - .toString(), .toDateString(), .toTimeString() *Devuelve una cadena con la fecha*
 
-      ```javascript
-      ahora.toString(); // Fecha y Hora
-      ahora.toDateString(); // Solo Fecha
-      ahora.toTimeString(); // Solo Hora
-      ```
+    ```javascript
+    ahora.toString(); // Fecha y Hora
+    ahora.toDateString(); // Solo Fecha
+    ahora.toTimeString(); // Solo Hora
+    ```
 
-    - .toUTCString(), .toISOString() *Devuelve una cadena con la fecha en formatos específicos*
+  - .toUTCString(), .toISOString() *Devuelve una cadena con la fecha en formatos específicos*
 
-      ```javascript
-      ahora.toISOString(); // ISO
-      ahora.toUTCString(); // UTC
-      ```
+    ```javascript
+    ahora.toISOString(); // ISO
+    ahora.toUTCString(); // UTC
+    ```
 
-    - .toLocaleString() *Devuelve una cadena con la fecha en version local.*
+  - .toLocaleString() *Devuelve una cadena con la fecha en version local.*
 
-      ```javascript
-      var ahora = new Date();
-      console.info(ahora.toLocaleString());
-      
-      // Código de idioma IETF para Alemán
-      console.info(ahora.toLocaleString("de-DE"));
-      
-      // Opciones Avanzadas para fechas
-      var opciones = { 
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric'};
-      console.log(ahora.toLocaleString("de-DE", opciones));
-      ```
+    ```javascript
+    var ahora = new Date();
+    console.info(ahora.toLocaleString());
     
-    - Tiempo transcurrido:
+    // Código de idioma IETF para Alemán
+    console.info(ahora.toLocaleString("de-DE"));
+    
+    // Opciones Avanzadas para fechas
+    var opciones = { 
+    weekday: 'long',
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric'};
+    console.log(ahora.toLocaleString("de-DE", opciones));
+    ```
+  
+  - Tiempo transcurrido:
 
-      ```javascript
-      var inicio = new Date();
-      // + código
-      var fin = new Date();
-      var transcurso = fin.getTime() - inicio.getTime();
-      console.info("Pasaron "+transcurso+"ms");
-      ```
-
+    ```javascript
+    var inicio = new Date();
+    // + código
+    var fin = new Date();
+    var transcurso = fin.getTime() - inicio.getTime();
+    console.info("Pasaron "+transcurso+"ms");
+    ```
 
 
 **Truco**
