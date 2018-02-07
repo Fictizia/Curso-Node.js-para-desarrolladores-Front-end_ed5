@@ -1,5 +1,6 @@
 # Clase 2
 
+![nodejs](http://jonmircha.github.io/slides-nodejs/img/node-is-coming.jpg)
 
 ### Trabajando con APIs
 
@@ -71,7 +72,7 @@ function peticionJqueryAjax (url) {
 peticionAjax('https://api.github.com/users/josex2r')
 ```
 
-**Vainilla JS** (`XMLHttpRequest`)
+**Vanilla JS** (`XMLHttpRequest`)
 
 - *readyState*:
   - 0 es *uninitialized*
@@ -100,7 +101,7 @@ function peticionAjax(url) {
 peticionAjax('https://api.github.com/users/josex2r')
 ```
 
-**Vainilla JS** (`fetch`)
+**Vanilla JS** (`fetch`)
 
 ```javascript
 function peticionAjax(url) {
@@ -255,12 +256,6 @@ Soporte en cliente (librerías):
     node -v
     ```
 
-  - Npm
-
-    ```
-    npm -v
-    ```
-
 
 ### Hello World
 
@@ -373,6 +368,8 @@ console.log("Hola Mundo!");
 
 ### URL
 
+![url_parts](https://doepud.co.uk/images/blogs/complex_url.png)
+
 - **Leyendo urls:**
 
   ```javascript
@@ -462,7 +459,7 @@ console.log("Hola Mundo!");
 3. En caso de error inesperado debemos capturarlo y controlar el posible estado en que haya podido quedar la ejecución del código.
 > Nicolas Nombela en [nnombela](http://nnombela.com/blog/2012/03/21/asincronicidad-en-node-dot-js/)
 
-- **Sincrónico - código bloqueante:**
+- **Síncrono - código bloqueante:**
 
   ```javascript
   const http = require('http');
@@ -1264,6 +1261,14 @@ console.log("===================================");
 
 ![npm_logo](https://docs.npmjs.com/images/npm.svg)
 
+**[Librerías interesantes de node](https://github.com/sindresorhus/awesome-nodejs#command-line-utilities)**
+
+- ** Comprobar versión**
+
+  ```
+  npm -v
+  ```
+
 - **Instalar paquetes:**
   - global:
 
@@ -1550,12 +1555,64 @@ console.log("===================================");
 
 ### Ejercicios
 
-**X -** Crear un servidor web que al acceder te muestre el contenido del fichero que aparece en la url:
+**1 -** Crea las rutas básicas para tener una página web clásica:
+  - Debe responder con contenido HTML
+  - `/`: Mostrará un título (`h1`) con el texto `Bienvenido`
+  - `/contact`: Aparecerá un listado (`ul`) con algunos datos personales (nombre, apellidos, email, ...)
+  - `/about`: Se mostrará un pequeño texto introductorio
+  - `/bug`: Modificará todos los mensajes anteriores por la [siguiente imagen](https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/bug_yellow_error.png)
+  - En el caso de que la ruta no exista se redigirá al index (`/`)
+
+**Solución:**
+
+```javascript
+const http = require('http');
+const process = require('process');
+const url = require('url');
+
+let isBugged = false;
+
+http.createServer((req, res) => {
+  const pathname = url.parse(req.url).pathname;
+  const bug = '<img src="https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/bug_yellow_error.png">';
+  const welcome = '<h1>Bienvenido!!</h1>';
+  const about = 'Somos una empresa que usa <b>la ñ y otros caracteres especiales!</b>....';
+  const contact = `
+    <ul>
+      <li><b>Nombre:</b> Jose Luis</li>
+      <li><b>Apellidos:</b> Represa </li>
+    </ul>
+  `;
+  
+  res.writeHead(200, {
+    'Content-Type': 'text/html; charset=utf-8'
+  });
+  
+  if(pathname === '/') {
+    res.end(isBugged ? bug : welcome);
+  } else if(pathname === '/about') {
+    res.end(isBugged ? bug : about);
+  } else if(pathname === '/contact') {
+    res.end(isBugged ? bug : contact);
+  } else if (pathname === '/bug') {
+    isBugged = true;
+    res.end(bug);
+  } else {
+    res.writeHead(301, {
+      'Location': '/'
+    });
+  }
+}).listen(8080);
+```
+
+**2 -** Crear un servidor web que al acceder te muestre el contenido del fichero que aparece en la url:
   - Dada la siguiente url: `http://localhost/README.md`
   - Hay que extraer el nombre del fichero con la librería `URL` (`README.md`)
   - Leer el fichero con el `FileSystem` (`fs`):
     - Si el fichero no existe, devolver un error 404
     - Si el fichero existe, devolver el contenido del mismo
+
+**Solución:**
 
 ```javascript
 const http = require('http');
@@ -1582,185 +1639,50 @@ http.createServer((request, response) => {
 }).listen(8080, 'localhost');
 ```
 
-**X -** Imprimir por pantalla el payload de una petición POST
+**3 -** Crear un servidor web con las siguientes características:
+  - Al recibir una petición **GET** mostrará el texto `Hola Mundo!`
+  - Si en la petición anterior llega el parámetro `search` buscará una película con ese valor utilizando [omdbAPI](http://www.omdbapi.com)
+    - Puedes utilizar la api key `e9b5e65a`
+    - Ejemplo: `localhost?search=Avengers`
+  - Si hay resultados se mostrará el listado de películas
+  - Si no hay resultados se devolverá un 404
+
+**Solución:**
 
 ```javascript
 const http = require('http');
+const url = require('url');
 
-http.createServer((request, response) => {
-  const { headers, method, url } = request;
-  let body = [];
-  request.on('error', (err) => {
-    console.error(err);
-  }).on('data', (chunk) => {
-    body.push(chunk);
-  }).on('end', () => {
-    body = Buffer.concat(body).toString();
-    // At this point, we have the headers, method, url and body, and can now
-    // do whatever we need to in order to respond to this request.
-  });
-}).listen(8080); // Activates this server, listening on port 8080.
-```
+http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const { search } = parsedUrl.query;
 
-**1 -** Sacar en el html la respuesta de [OMDB](http://omdbapi.com/) para la pelicula Hackers
+  http.get(`http://www.omdbapi.com/?s=${search}&apikey=e9b5e65a`, (response) => {
+    const { statusCode } = response;
 
-```javascript
-   function peticionAjax (movieName) {
-    const xmlHttp = new XMLHttpRequest(),
-                  cURL = 'http://www.omdbapi.com/?t='+movieName+'&y=&plot=short&r=json';
-  
-              xmlHttp.onreadystatechange = function () {
-  
-                  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                      const datos = (JSON.parse(xmlHttp.responseText));
-                      const contenido = "";
-                      contenido += "<h1>"+datos.Title+"</h1>"
-                      contenido += "<p>"+datos.Plot+"</p>"
-                      document.body.innerHTML = contenido;
-                  } else if (xmlHttp.readyState === 4 && xmlHttp.status === 404) {
-                      console.error("ERROR! 404");
-                      console.info(JSON.parse(xmlHttp.responseText));
-                  }
-              };
-  
-              xmlHttp.open( "GET", cURL, true );
-              xmlHttp.send();
-  }
-  
-  peticionAjax("Hackers");
-```
-
-
-**2 -** Sacar en el html el tiempo meteorológico de Madrid, Barcelona y Valencia. 
-Nota: http://openweathermap.org te será de gran ayuda, busca la solución al error 401
-
-```javascript
-  const contenido = "";
-    function temperaturaCiudad (ciudad) {
-        const xmlHttp = new XMLHttpRequest(),
-        APIKey = '', // Puedes usar una cuenta gratuita -> http://openweathermap.org/price
-        cURL = 'http://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&APPID='+APIKey;
-    
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                const datos = (JSON.parse(xmlHttp.responseText));
-                contenido += "<h1>"+datos.name+"</h1>"
-                contenido += "<p>"+datos.weather[0].description+"</p>"
-                document.body.innerHTML = contenido;
-            } else if (xmlHttp.readyState === 4 && xmlHttp.status === 404) {
-                datos = JSON.parse(xmlHttp.responseText);
-                console.error("ERROR! 404");
-                console.info(datos);
-            }
-        };
-    
-        xmlHttp.open( "GET", cURL, true );
-        xmlHttp.send();
-    }
-    
-    temperaturaCiudad("Madrid");
-    temperaturaCiudad("Barcelona");
-    temperaturaCiudad("Valencia");
-```
-
-
-**3 -** Jugando con [datos abiertos](http://datos.gob.es/), saquemos los detalles de todos los cuadros eléctricos de Gijón por consola.
-
-```javascript
-    function peticionAjax (url) {
-    const xmlHttp = new XMLHttpRequest();
-  
-              xmlHttp.onreadystatechange = function () {
-  
-                  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                      const datos = (JSON.parse(xmlHttp.responseText));
-                        console.log(datos)
-                  } else if (xmlHttp.readyState === 4 && xmlHttp.status === 404) {
-                      console.error("ERROR! 404");
-                      console.info(JSON.parse(xmlHttp.responseText));
-                  }
-              };
-  
-              xmlHttp.open( "GET", url, true );
-              xmlHttp.send();
-  }
-    
-    
-    // Utilizamos un proxy como http://crossorigin.me para solucionar el problema de CORS  
-  peticionAjax("http://crossorigin.me/http://opendata.gijon.es/descargar.php?id=163&tipo=JSON");
-
-```
-
-
-**4 -** Crea una web que nos permita ver los detalles almacenados en IMBD de una pelicula partiendo únicamente del título.
-
-Recursos:
-- [OMDb API - The Open Movie Database](http://omdbapi.com/)
-
-- [Solución](http://codepen.io/ulisesgascon/pen/LNJwwo)
-
-
-**5 -** Crea las rutas básicas para tener una página web clásica (¿Quienes somos? | ¿Donde Estamos? | ¿Que hacemos? | Contacto... etc...)
-
-```javascript
-      const http = require('http'),
-          process = require('process'),
-            url = require('url');
-    
-      http.createServer(function (req, res) {
-        const pathname = url.parse(req.url).pathname;
-        const hola = '<h1>Bienvenido!!</h1>';
+    let rawData = '';
+    response.setEncoding('utf8');
+    response.on('data', (chunk) => rawData += chunk);
+    response.on('end', () => {
+      try {
+        const parsedData = JSON.parse(rawData);
         
-        if (pathname === '/') {
-          res.writeHead(200, {
-            'Content-Type': 'text/html'
-          });
-          res.end(hola);
-          
-        } else if (pathname === '/quienes') {
-          res.writeHead(200, {
-            'Content-Type': 'text/html; charset=utf-8'
-          });
-          res.end(hola +'Somos una empresa que usa <b>la ñ y otros caracteres especiales! </b>....');
-      
-        } else if (pathname === '/donde') {
-          res.writeHead(200, {
-            'Content-Type': 'text/plain; charset=utf-8'
-          });
-          res.end('Estamos cerca de tí....');
-        
-        } else if (pathname === '/que') {
-          res.writeHead(200, {
-            'Content-Type': 'text/plain; charset=utf-8'
-          });
-          res.end('Hacemos cosas....');
-        
-        } else if (pathname === '/bug') {
-          
-          // Termina el proceso de Node
-          process.exit(1); 
-    
-      
-        } else if (pathname === '/contacto') {
-          res.writeHead(200, {
-            'Content-Type': 'text/plain; charset=utf-8'
-          });
-          res.end('Contactanos!....');
-    
-          
-        } else {
-            res.writeHead(404, {
-            'Content-Type': 'text/plain'
-          });
-          res.end('L-E-G-E-N-D-A-R-I-O... 404!');
+        if (!parsedData.Search.length) {
+          throw new Error('No data :(');
         }
         
-      }).listen(process.env.PORT, process.env.IP);
-      
-      console.log('Servidor funcionando en http://'+process.env.IP+':'+process.env.PORT+'/');
+        res.writeHead(200);
+        res.end(parsedData.Search.map((film) => film.Title).join('\n'));
+      } catch(e) {
+        res.writeHead(404);
+        res.end('No data found :(');
+      }
+    });
+  });
+}).listen(8080);
 ```
 
-**6 -** Realiza un script ejecutable que nos muestre la información de los terremotos acontecidos en la última hora.
+**4 -** Realiza un script ejecutable que nos muestre la información de los terremotos acontecidos en la última hora.
 - [Fuente de datos](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
 - Requisitos:
   - Debemos utilizar párametros cuando se ejecute para definir la magnitud de los terremotos que queremos
@@ -1768,95 +1690,90 @@ Recursos:
   - Si el parametro es incorrecto también.
   - Ajustaremos la petición http en función del parámetro. 
 - Apariencia(Orientativa):
-```
-*****************************
-USGS All Earthquakes, Past Hour
-   ---------------------     
-total: 8
-status: 200
-   ---------------------     
-5/10/2016, 3:46:30 PM
-==============================
-M 1.3 - 6km WNW of Anza, California
-5/10/2016, 3:43:01 PM
-Magnitud: 1.32
-Estatus: automatic
-Tipo: earthquake
-Lugar: 6km WNW of Anza, California
-Coordenadas: -116.7246704 , 33.5830002
-Info: http://earthquake.usgs.gov/earthquakes/eventpage/ci37563240
-Detalles: http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37563240.geojson
-==============================
-... (por cada terremoto de los iguales a los iguales)
-```
 
-Solución:
+  ```
+  *****************************
+  USGS All Earthquakes, Past Hour
+     ---------------------     
+  total: 8
+  status: 200
+     ---------------------     
+  5/10/2016, 3:46:30 PM
+  ==============================
+  M 1.3 - 6km WNW of Anza, California
+  5/10/2016, 3:43:01 PM
+  Magnitud: 1.32
+  Estatus: automatic
+  Tipo: earthquake
+  Lugar: 6km WNW of Anza, California
+  Coordenadas: -116.7246704 , 33.5830002
+  Info: http://earthquake.usgs.gov/earthquakes/eventpage/ci37563240
+  Detalles: http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ci37563240.geojson
+  ==============================
+  ... (por cada terremoto de los iguales a los iguales)
+  ```
+
+**Solución:**
+
 ```javascript
- const http = require('http');
+#!/usr/bin/env node
+const https = require('https');
   
-  if (!process.argv[2]) {
-      console.error('Necesito un parámetro para afinar mis resultados');
-      process.exit(1);
-  } else {
-      if (process.argv[2] !== "all" &&
-          process.argv[2] !== "1.0" &&
-          process.argv[2] !== "2.5" &&
-          process.argv[2] !== "4.5" &&
-          process.argv[2] !== "significant") {
-          console.error('Parámetro incorrecto!. Solo admito:\n  - all\n - 1.0\n - 2.5\n - 4.5\n - significant\n');
-          process.exit(1);
-      }
-  }
+if (!process.argv[2]) {
+  console.error('Necesito un parámetro para afinar mis resultados');
+  process.exit(1);
+} else if (!['all', '1.0', '2.5', '4.5', 'significant'].includes(process.argv[2])) {
+  console.error('Parámetro incorrecto!. Solo admito:\n  - all\n - 1.0\n - 2.5\n - 4.5\n - significant\n');
+  process.exit(1);
+}
   
-  const options = {
-      host: 'earthquake.usgs.gov',
-      path: '/earthquakes/feed/v1.0/summary/' + process.argv[2] + '_hour.geojson'
-  };
-  
-  http.get(options, function(res) {
-      const data = "";
-      const json;
-      res.on("data", function(chunk) {
-          data += chunk;
+const options = {
+    host: 'earthquake.usgs.gov',
+    path: `/earthquakes/feed/v1.0/summary/${process.argv[2]}_hour.geojson`
+};
+
+https.get(options, (res) => {
+    let data = '';
+
+    res.on('data', (chunk) => data += chunk);
+    res.on('end', () => {
+      console.log(data)
+      const json = JSON.parse(data);
+
+      console.log('*****************************');
+      console.log(json.metadata.title);
+      console.log('   ---------------------     ');
+      console.log('total:', json.metadata.count);
+      console.log('status:', json.metadata.status);
+      console.log('   ---------------------     ');
+      console.log(new Date(json.metadata.generated).toLocaleString('es-ES'));
+      console.log('==============================');
+      json.features.forEach((earthquake) => {
+        console.log(earthquake .properties.title);
+        console.log(new Date(earthquake .properties.time).toLocaleString('es-ES'));
+        console.log('Magnitud:', earthquake .properties.mag);
+        console.log('Estatus:', earthquake .properties.status);
+        console.log('Tipo:', earthquake .properties.type);
+        console.log('Lugar:', earthquake .properties.place);
+        console.log('Coordenadas:', earthquake .geometry.coordinates[0] + ' ,', earthquake .geometry.coordinates[1]);
+        console.log('Info:', earthquake .properties.url);
+        console.log('Detalles:', earthquake .properties.detail);
+        console.log('==============================');
       });
-      res.on("end", function() {
-          json = JSON.parse(data);
-  
-          console.log("*****************************");
-          console.log(json.metadata.title);
-          console.log("   ---------------------     ");
-          console.log("total: " + json.metadata.count);
-          console.log("status: " + json.metadata.status);
-          console.log("   ---------------------     ");
-          console.log(new Date(json.metadata.generated).toLocaleString("es-ES"));
-          console.log("==============================");
-          for (const i = 0; i < json.features.length; i++) {
-              console.log(json.features[i].properties.title);
-              console.log(new Date(json.features[i].properties.time).toLocaleString("es-ES"));
-              console.log("Magnitud: " + json.features[i].properties.mag);
-              console.log("Estatus: " + json.features[i].properties.status);
-              console.log("Tipo: " + json.features[i].properties.type);
-              console.log("Lugar: " + json.features[i].properties.place);
-              console.log("Coordenadas: " + json.features[i].geometry.coordinates[0] + " , " + json.features[i].geometry.coordinates[1]);
-              console.log("Info: " + json.features[i].properties.url);
-              console.log("Detalles: " + json.features[i].properties.detail);
-              console.log("==============================");
-          }
-          process.exit(0);
-      });
-  }).on('error', function(e) {
-      console.log("Error fetching data: " + e.message);
-      process.exit(1);
+      process.exit(0);
   });
+}).on('error', function(e) {
+    console.log('Error fetching data:', e.message);
+    process.exit(1);
+});
 ```
 
-
-**7 -** Crearemos varios scripts para automatizar tareas.
-- Verificador de versiones para NPM y Nodejs
-- Verificador del status de Git
-- Descargar (Clonar) Bootstrap de Github
-- Descargar (Clonar) nuestro curso de Github
-- Emoji al azar con [emoji-random](https://www.npmjs.com/package/emoji-random)
+**5 -** Crearemos varios scripts para automatizar tareas utilizando `npm`:
+- `npm run versions`: Tiene que mostrar las versiones de `nodejs` y `npm`
+- `npm run status`: Verificador del status de Git
+- `npm run curso`: Clona nuestro curso de Github
+- `npm run emoji`: Muestra un emoji al azar utilizando [emoji-random](https://www.npmjs.com/package/emoji-random)
+- `npm run emoji`: Muestra **la url** de un **gif** por consola [make-me-lol](https://www.npmjs.com/package/make-me-lol)
 
 ```json
 {
@@ -1869,7 +1786,8 @@ Solución:
     "versions": "node -v && npm -v",
     "bootstrap": "git clone https://github.com/twbs/bootstrap.git",
     "curso": "git clone https://github.com/Fictizia/Curso-Node.js-para-desarrolladores-Front-end_ed2.git",
-    "status": "git status"
+    "status": "git status",
+    "lol": "make-me-lol --output --gif"
   },
   "devDependencies": {
     "emoji-random": "^0.1.2"
