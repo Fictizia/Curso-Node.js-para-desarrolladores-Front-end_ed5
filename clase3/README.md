@@ -1067,14 +1067,6 @@ Una función que recibe 3 o 4 parámetros: req, res, next
 
 ### Ejercicios
 
-**1 -** Crearemos una aplciación usando Firebase y Express para gestionar las peliculas que nos gustan.
+**1 -** Crearemos una aplciación utilizando Express para gestionar las peliculas que nos gustan.
 
-- Objetivos:
-    - Crear un APIRest para poder gestionar la aplicación desde otros dominios
-    - Habilita CORS para la API
-    - Utiliza JADE para gestionar las vistas de tu aplicación
-    - Crea módulos para gestionar las rutas
-    - Enriquece los datos facilitados por el usuario con la [API de OMBD](http://omdbapi.com/)
-    - Guardate una copia de las portadas de las peliculas y sirvelas en la carpeta de los archivos estáticos para evitar el error 403 de IMBD
-
-- **[Solución](https://github.com/UlisesGascon/Simple-API-REST-with-Firebase-and-IMBD/releases/tag/v1.0.0)**
+**[Ver en el siguiente repositorio](https://github.com/josex2r/film-api)**
