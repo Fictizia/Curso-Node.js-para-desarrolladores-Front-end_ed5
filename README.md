@@ -2,11 +2,11 @@
 ![shieldsIO](https://img.shields.io/github/forks/Fictizia/Curso-Node.js-para-desarrolladores-Front-end_ed5.svg)
 ![shieldsIO](https://img.shields.io/github/stars/Fictizia/Curso-Node.js-para-desarrolladores-Front-end_ed5.svg)
 
-# Node.js para desarrolladores Front-end
+![WideImg](http://fictizia.com/img/github/Fictizia-plan-estudios-github.jpg)
+# Curso de Node.js para desarrolladores Front-end
 ### Automatización, JavaScript Server-Side, Express, Yeoman, Gulp, Bower, Heroku, Firebase, Bots.
 
-![WideImg](http://www.fictizia.com/assets/styles/styleImgs/wideBox/widebox_nodejs.png)
-![Fictizia Logo](https://media.licdn.com/media/p/1/000/1ed/254/29475de.png)
+
 
 Node.js es un entorno de programación en JavaScript para Back-end creado a partir del motor V8 de Google Chrome. Node.js permite crear servidores HTTP muy rápidamente y gestionar peticiones con mucha mayor agilidad que entornos tradicionales como PHP y MySQL.
 
