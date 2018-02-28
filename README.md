@@ -45,7 +45,7 @@ Teoría y Recursos
 | [Clase 2](clase2/README.md) | [Clase 2](clase2/recursos.md) | HTTP, terminal UNIX, Node.js y npm |
 | [Clase 3](clase3/README.md) | [Clase 3](clase3/recursos.md) | Express, middlewares y motores de plantillas |
 | [Clase 4](clase4/README.md) | [Clase 4](clase4/recursos.md) | Socket.io y despliegue en la nube mediante Heroku |
-| Clase 5 | Clase 5 | Bases de datos noSQL con Firebase |
+| [Clase 5](clase5/README.md) | [Clase 5](clase5/recursos.md) | Bases de datos noSQL con Firebase |
 | Clase 6 | Clase 6 | Bower y automatización de tareas con Gulp |
 | Clase 7 | Clase 7 | Yeoman, testing de aplicaciones e integración contínua |
 | Clase 8 | Clase 8 | Creando bots "inteligentes" |
