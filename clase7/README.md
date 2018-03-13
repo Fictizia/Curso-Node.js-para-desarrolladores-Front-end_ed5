@@ -139,7 +139,9 @@ Simplifica el test proporcionando muchas aserciones con las que probar el códig
 
 [Chai API](http://chaijs.com/api/)
 
-**Utilizando `expect`**:
+**Utilizando `expect/should`**:
+
+[API](http://www.chaijs.com/api/bdd/)
 
 ```javascript
 const expect = require('chai').expect;
@@ -154,6 +156,8 @@ it('returns a String', () => {
 
 **Utilizando `assert`**:
 
+[API](http://www.chaijs.com/api/assert/)
+
 ```javascript
 const assert = require('chai').assert;
 const myFuntion = require('./my-function');
@@ -165,19 +169,97 @@ it('returns a String', () => {
 });
 ```
 
-### Fakes (mock, spy, stub)
+### Fakes (mock, spies, stub)
 
 ### Sinon.js
 
 ![sinon](https://i2.wp.com/blog.fossasia.org/wp-content/uploads/2017/07/sinon.jpg?resize=592%2C266&ssl=1)
 
-**Sinon + Chai**:
+> Sinon.js es una librería totalmente agnóstica de cualquier framework de testign que permite crear **spies**, **stubs** y **mocks**.
+
+**[Sinon + Chai](https://github.com/domenic/sinon-chai)**
+
+#### Spies
+
+Un **spy** es un objeto que escucha las interacciones con otro objeto.
+Mediante el uso de espías podemos comprobar si se ha llamado a una determinada función,
+los parámetros que le han llegado e incluso qué ha devuelto.
 
 ```javascript
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require("sinon-chai");
-chai.use(sinonChai);
-global.expect = chai.expect;
-global.sinon = sinon;
+it('calls the callback when file is readed', () => {
+  const mySpy = sinon.spy();
+  
+  return readFilePromise('file.txt', 'utf-8')
+    .then(spy)
+    .then(() => {
+      // Comprobamos que se haya llamado
+      mySpy.should.have.been.called;
+      // Comprobamos que se haya llamado con un parámetro (el fichero)
+      expect(spy.getCall(0).args).to.have.lengthOf(1);
+  });
+});
+```
+
+#### Stubs
+
+Un **stub** es un objeto con un comportamiento preprogramado.
+A parte de realizar todo lo que hace un **spy** puede sobreescribir el comportamiento de una función.
+
+```javascript
+const fs = require('fs');
+
+function readFile(name) {
+  return fs.readFileSync(name, 'utf-8');
+}
+
+it('calls the callback when file is readed', () => {
+  const fileContent = 'foo';
+  sinon.stub(fs, 'readFileSync').returns(fileContent);
+  
+  const result = readFile('file.txt');
+
+  expect(result).to.be.equal(fileContent);
+});
+```
+
+### Ejercicios
+
+**1 -** Inicializa un repositorio utilizando **npm** y **git**.
+Deberás preparar un entorno básico de testing siguiendo los siguientes patrones:
+- Crea un directorio `lib/` donde irá el código de tu proyecto.
+- Crea un directorio `tests/` donde irán las pruebas unitarias.
+- En el `package.json` se debe crear el script `test` para que se ejecuten los tests del proyecto.
+- Cuando ejecutes los tests (utilizando `mocha + chai`) se deben ejecutar todos los ficheros en el directorio `tests/`.
+
+**2 -** Aplicando **TDD** y utilizando el repositorio del ejercicio anterior, crea una función `atm` que devuelva el número más eficiente de billetes dados los siguientes casos:
+- Si un valor no es válido (ej. negativo) no debe devolver nada.
+- La función debe devolver billetes de entre 5 y 50€.
+
+**Ejemplo** (5€)
+  - 1 billete de 5€.
+
+**Ejemplo** (35€)
+  - 1 billete de 5€.
+  - 1 billete de 10€.
+  - 1 billetes de 20€.
+
+**Ejemplo** (165€)
+  - 1 billete de 5€.
+  - 1 billete de 10€.
+  - 3 billetes de 50€.
+
+**3 -** Testea la siguiente función utilizando `sinon.js` y [sinon-chai](https://github.com/domenic/sinon-chai):
+
+```javascript
+function getFilm(id, adapter) {
+  const url = `https://ghibliapi.herokuapp.com/films/${id}`;
+  
+  if (!id) {
+    throw new Error('ID not exists');
+  }
+
+  return adapter(url).then((json) => {
+    return json.title;
+  });
+}
 ```
