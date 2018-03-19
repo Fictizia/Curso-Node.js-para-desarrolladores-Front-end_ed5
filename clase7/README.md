@@ -224,6 +224,8 @@ it('calls the callback when file is readed', () => {
 
 ### Ejercicios
 
+[**Solución de los ejecicios**](https://github.com/josex2r/mocha-example)
+
 **1 -** Inicializa un repositorio utilizando **npm** y **git**.
 Deberás preparar un entorno básico de testing siguiendo los siguientes patrones:
 - Crea un directorio `lib/` donde irá el código de tu proyecto.
