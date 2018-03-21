@@ -169,6 +169,47 @@ module.exports = (robot) => {
     });
   ```
 
+- Manejo de errores:
+
+  ```js
+  module.exports = (robot) => {
+    robot.error((error, res) => {
+      robot.logger.error('DOES NOT COMPUTE');
+      
+      if (res) {
+        res.send(error.message);
+      }
+    });
+  ```
+
+- Persistencia de datos (cerebro):
+
+  Por defecto el almacenamiento será en memoria, a no ser que utilicemos algún **script** como:
+  - [hubot-firebase-brain](https://github.com/justmiles/hubot-firebase-brain)
+  - [hubot-mysql-brain](https://github.com/chickenzord/hubot-mysql-brain)
+  - [hubot-redis-brain](https://github.com/hubotio/hubot-redis-brain)
+  - ...
+
+  ```js
+  module.exports = (robot) => {
+    // Leer variable
+    robot.brain.get('foo');
+    // Guardar variable
+    robot.brain.set('foo', 'bar');
+  });
+  ```
+  
+  A parte del `get` y del `set`, disponemos de otros métodos que nos permiten obtener los datos de un determinado usuario:
+  
+  ```js
+  module.exports = (robot) => {
+    user = robot.brain.userForId(id);
+    user = robot.brain.userForName(name);
+    user = robot.brain.userForFuzzyName(name);
+    user = robot.brain.usersForFuzzyName(name);
+  });
+  ```
+
 - [Más funcionalidad en la documentación](https://hubot.github.com/docs/scripting/).
 
 ##### Añadiendo scripts externos
@@ -194,8 +235,11 @@ Para añadirlos únicamente es necesario instalarlos localmente ejecutando `npm 
 
 ### Ejercicios
 
-**1 -** Crea un bot capaz de responder a los siguientes comandos utilizando la [API de Ghibli](https://ghibliapi.herokuapp.com):
-  - `lista de películas`: Recuperar el listado completo y mostrarlo.
-  - `<n> últimas películas`: Recuperar las últimas `n` (número del 0 al 9) películas.
+[**Solución**](https://github.com/josex2r/hubot-example)
+
+**1 -** Crea un bot capaz de:
+- Escuchar la palaba `ghibli` y responder con los comandos que es capaz de hacer.
+- Responder a los siguientes comandos utilizando la [API de Ghibli](https://ghibliapi.herokuapp.com):
+  - `listado de películas`: Recuperar el listado completo y mostrarlo.
+  - `<n> <últimas|primeras> películas`: Recuperar las últimas/primeras `n` (número del 0 al 9) películas.
   - `detalle de la película <id>`: Recuperar el detalle de una película dada su ID.
-  - `[título|descripción|director|productor|fecha|puntuación] de la película <id>`: Recuperar el detalle de una película dada su ID.
